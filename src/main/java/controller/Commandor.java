@@ -15,7 +15,7 @@ public class Commandor extends Actions implements Controller{
     private static Commandor commandor;
     private static final Map<String, Consumer> commands = new HashMap<>();
     private static final ExecutorService executor = Executors.newFixedThreadPool(10);
-    private static final String GET_EXCHANGE_COMMAND = "/info";
+    private static final String GET_NEXT_COMMAND = "/next_";
 
 
    private Commandor(TelegramStudyBot telegramStudyBot) {
@@ -47,14 +47,14 @@ public class Commandor extends Actions implements Controller{
 
     @Override
     public void sendText(Long chatId) {
-        call(GET_EXCHANGE_COMMAND, chatId);
+        call(GET_NEXT_COMMAND, chatId);
         log.info("The info for " + chatId.toString() + "is sent");
     }
 
     @Override
     public void sendText(List<Long> chatIdUsers) {
        chatIdUsers.forEach(chatId -> {
-           call(GET_EXCHANGE_COMMAND, chatId);
+           call(GET_NEXT_COMMAND, chatId);
            log.info("The info for " + chatId.toString() + "is sent");
        });
     }

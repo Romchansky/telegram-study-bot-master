@@ -17,7 +17,7 @@ public class Actions {
 
     protected Consumer<Update> start = (chatInfo) -> {
        // process.getUser(chatInfo);
-        String text = "Добро пожаловать! Для начала работы с ботом введите электронную почту: ";
+        String text = "Добро пожаловать! Для начала работы зарегестрируйтесь: ";
         MenuBlock[] menu = Start.values();
         InlineKeyboardMarkup markup = Keyboard.inline(menu, 2);
         service.sendNew(chatInfo, text, markup);
