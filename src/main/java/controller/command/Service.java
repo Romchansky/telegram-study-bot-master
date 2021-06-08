@@ -62,6 +62,14 @@ public class Service {
         }
     }
 
+    public <T> void sendNew(T update, String text) {
+        Long chatId = getChatId(update);
+        if (Objects.nonNull(chatId)) {
+            sendNewMessage(chatId, text);
+        }
+    }
+
+
     public void sendInstead(Update update, String text, InlineKeyboardMarkup markup) {
         if (update.hasCallbackQuery()) {
             CallbackQuery callbackQuery = update.getCallbackQuery();
@@ -88,6 +96,16 @@ public class Service {
         }
         executeSendMessage(sendMessage);
     }
+
+    private void sendNewMessage(Long chatId, String text) {
+        String id = chatId.toString();
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setText(text);
+        sendMessage.setChatId(id);
+        sendMessage.setParseMode(ParseMode.HTML);
+        executeSendMessage(sendMessage);
+    }
+
 
     private void sendEditMessage(CallbackQuery callbackQuery, String text, InlineKeyboardMarkup markup) {
         String chatId = callbackQuery.getMessage().getChatId().toString();
