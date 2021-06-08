@@ -1,8 +1,10 @@
 package user.service;
 
+
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.ConcurrentHashMap;
+
 import org.apache.commons.validator.routines.EmailValidator;
 
 @Slf4j
@@ -11,17 +13,17 @@ public class UserSettingsStorage implements Storage {
     public static final UserSettingsStorage STORAGE = new UserSettingsStorage();
     private final ConcurrentHashMap<Long, UserSettings> userSettingsStorage = new ConcurrentHashMap<>();
 
-    public UserSettingsStorage() {
-
+    private UserSettingsStorage() {
     }
 
-    public UserSettingsStorage getStorage() {
+    public static UserSettingsStorage getStorage() {
         return STORAGE;
     }
-    
+
     public boolean validateEmail(String email) {
         return EmailValidator.getInstance().isValid(email);
     }
+
 
     @Override
     public void putUserSettings(UserSettings userSettings) {
@@ -29,6 +31,7 @@ public class UserSettingsStorage implements Storage {
         userSettingsStorage.putIfAbsent(chatId, userSettings);
         log.debug("User " + chatId.toString() + " was created and stored", userSettings);
     }
+
 
     @Override
     public UserSettings getUserByChatId(Long chatId) {

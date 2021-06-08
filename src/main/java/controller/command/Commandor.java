@@ -1,5 +1,7 @@
-package controller;
+package controller.command;
 
+import controller.Controller;
+import controller.TelegramStudyBot;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
@@ -11,7 +13,7 @@ import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
 @Slf4j
-public class Commandor extends Actions implements Controller{
+public class Commandor extends Actions implements Controller {
     private static Commandor commandor;
     private static final Map<String, Consumer> commands = new HashMap<>();
     private static final ExecutorService executor = Executors.newFixedThreadPool(10);
@@ -21,6 +23,7 @@ public class Commandor extends Actions implements Controller{
    private Commandor(TelegramStudyBot telegramStudyBot) {
         super(telegramStudyBot);
         this.register(start, "/start");
+        this.register(registration, "/registration");
     }
 
     public static Commandor getInstance(TelegramStudyBot studyBot) {

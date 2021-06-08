@@ -1,5 +1,6 @@
-package controller;
+package controller.command;
 
+import controller.TelegramStudyBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.ParseMode;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
