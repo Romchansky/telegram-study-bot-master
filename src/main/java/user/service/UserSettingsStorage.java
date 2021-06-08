@@ -3,6 +3,7 @@ package user.service;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.ConcurrentHashMap;
+import org.apache.commons.validator.routines.EmailValidator;
 
 @Slf4j
 public class UserSettingsStorage implements Storage {
@@ -16,6 +17,10 @@ public class UserSettingsStorage implements Storage {
 
     public UserSettingsStorage getStorage() {
         return STORAGE;
+    }
+    
+    public boolean validateEmail(String email) {
+        return EmailValidator.getInstance().isValid(email);
     }
 
     @Override
