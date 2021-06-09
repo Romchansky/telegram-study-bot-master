@@ -5,11 +5,12 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum Start implements MenuBlock {
+public enum Next implements MenuBlock{
 
-    START("Старт", "/start");
+    NEXT("Далее","/next");
 
     private final String text;
     private final String command;
+
 
 }

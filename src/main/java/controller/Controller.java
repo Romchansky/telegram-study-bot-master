@@ -6,6 +6,6 @@ public interface Controller {
 
     void sendText(Long chatId);
 
-    void sendText(List<Long> ChatId);
+    void sendText(List<Long> chatId);
 
 }

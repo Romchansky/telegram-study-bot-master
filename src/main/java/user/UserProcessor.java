@@ -1,9 +1,11 @@
-package controller.command;
+package user;
 
+import controller.command.Service;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import user.service.UserSettings;
 import user.service.UserSettingsStorage;
 
+import java.time.LocalTime;
 import java.util.Objects;
 public class UserProcessor {
 
@@ -82,16 +84,16 @@ public class UserProcessor {
 //        }
 //    }
 //
-//    public void pushNotify(UserSettings user, String value) {
-//        LocalTime time;
-//        if (value.equals("Отключить уведомления")) {
-//            time = null;
-//        } else {
-//            Integer userSet = Integer.valueOf(value);
-//            time = LocalTime.of(userSet, 0);
-//        }
-//        user.setTime(time);
-//    }
+    public void pushNotify(UserSettings user, String value) {
+        LocalTime time;
+        if (value.equals("Отключить уведомления")) {
+            time = null;
+        } else {
+            Integer userSet = Integer.valueOf(value);
+            time = LocalTime.of(userSet, 0);
+        }
+        user.setTime(time);
+    }
 //
 //    public String pullDigits(UserSettings user) {
 //        int userSet = user.getDigitsAfterComma();

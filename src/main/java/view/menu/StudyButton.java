@@ -5,11 +5,8 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum Start implements MenuBlock {
-
-    START("Старт", "/start");
+public class StudyButton implements MenuBlock{
 
     private final String text;
     private final String command;
-
 }

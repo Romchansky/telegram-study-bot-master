@@ -20,14 +20,25 @@ public class Commandor extends Actions implements Controller {
     private static final String GET_NEXT_COMMAND = "/next_";
 
 
-   private Commandor(TelegramStudyBot telegramStudyBot) {
+    private Commandor(TelegramStudyBot telegramStudyBot) {
         super(telegramStudyBot);
         this.register(start, "/start");
         this.register(registration, "/registration");
         this.register(next, GET_NEXT_COMMAND);
-
-
-
+        this.register(sets, "/settings_");
+        this.register(closeTable, "/close");
+        this.register(closeSettings, "/close_settings");
+        this.register(notifyTime, "/notify_",
+                "9",
+                "10",
+                "11",
+                "12",
+                "13",
+                "14",
+                "15",
+                "16",
+                "17",
+                "Отключить уведомления");
     }
 
     public static Commandor getInstance(TelegramStudyBot studyBot) {
@@ -45,10 +56,16 @@ public class Commandor extends Actions implements Controller {
     }
 
     public <T> void call(String command, T chatInfo) {
-       if (command.startsWith("/next")) {
-           command = "next";
-       }
+        if (command.startsWith("/next")) {
+            command = "next";
+        }
 
+//        if (command.startsWith("/register")) {
+//            command = "/register";
+//        }
+
+        //написать условие на то на какой стадии регистрация и если она закончена то сделать скип и перейти на другую команду
+        // то есть регистрация это должно быть
         Consumer<T> action = commands.get(command);
         Command <T> method = new Command<>(action);
         method.setChatInfo(chatInfo);
@@ -64,9 +81,9 @@ public class Commandor extends Actions implements Controller {
 
     @Override
     public void sendText(List<Long> chatIdUsers) {
-       chatIdUsers.forEach(chatId -> {
-           call(GET_NEXT_COMMAND, chatId);
-           log.info("The info for " + chatId.toString() + "is sent");
-       });
+        chatIdUsers.forEach(chatId -> {
+            call(GET_NEXT_COMMAND, chatId);
+            log.info("The info for " + chatId.toString() + "is sent");
+        });
     }
 }

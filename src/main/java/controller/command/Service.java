@@ -81,7 +81,7 @@ public class Service {
         try {
             studyBot.execute(sendMessage);
         } catch (TelegramApiException e) {
-            e.printStackTrace();
+            e.printStackTrace();//logger
         }
     }
 

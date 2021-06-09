@@ -1,5 +1,6 @@
 package controller.command;
 
+
 import java.util.function.Consumer;
 
 public class Command<T> implements Runnable {
@@ -10,12 +11,11 @@ public class Command<T> implements Runnable {
         this.action = action;
         this.chatInfo = null;
     }
-
     protected Command<T> Clone(Command<T> command){
         return new Command<>(command.action);
     }
 
-    void setChatInfo (T chatInfo) {
+    void setChatInfo(T chatInfo) {
         this.chatInfo = chatInfo;
     }
 

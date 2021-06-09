@@ -5,9 +5,9 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum Start implements MenuBlock {
+public enum Settings implements MenuBlock {
 
-    START("Старт", "/start");
+    SETTINGS("Настройки","/settings");
 
     private final String text;
     private final String command;

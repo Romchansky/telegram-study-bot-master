@@ -1,4 +1,4 @@
-import controller.PropertiesLoader;
+import utils.PropertiesLoader;
 import controller.TelegramStudyBot;
 import lombok.SneakyThrows;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
@@ -9,7 +9,7 @@ public class Application {
     @SneakyThrows
     public static void main(String[] args) {
 
-        new PropertiesLoader().loadPropertiesFile("telegram.properties");
+       new PropertiesLoader().loadPropertiesFile("application.properties");
 
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
         telegramBotsApi.registerBot(new TelegramStudyBot());

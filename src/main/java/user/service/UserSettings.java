@@ -14,7 +14,7 @@ import java.time.LocalTime;
 @Getter
 @ToString
 public class UserSettings {
-    private @Setter(AccessLevel.NONE) Long chatId;
+    private final Long chatId;
     private String email;
     private String groupNumber;
     private LocalTime time;
