@@ -3,10 +3,11 @@ package user.service;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class StudyBlockStateStorage {
+
     private static final StudyBlockStateStorage STORAGE = new StudyBlockStateStorage();
     private final ConcurrentHashMap<Long, StudyBlockState> studyBlockStateStorage = new ConcurrentHashMap<>();
 
-    public StudyBlockStateStorage getStorage() {
+    public static StudyBlockStateStorage getStorage() {
         return STORAGE;
     }
 

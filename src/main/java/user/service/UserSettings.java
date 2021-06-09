@@ -22,6 +22,6 @@ public class UserSettings {
     public UserSettings(Long chatId) {
         this.chatId = chatId;
         time = LocalTime.of(9, 0);
-        log.info("new User : " + chatId.toString() + " is created.");
+        log.info("new User : " + chatId.toString() + " is created. Set  ChatId");
     }
 }

@@ -24,6 +24,10 @@ public class Commandor extends Actions implements Controller {
         super(telegramStudyBot);
         this.register(start, "/start");
         this.register(registration, "/registration");
+        this.register(next, GET_NEXT_COMMAND);
+
+
+
     }
 
     public static Commandor getInstance(TelegramStudyBot studyBot) {
@@ -41,6 +45,10 @@ public class Commandor extends Actions implements Controller {
     }
 
     public <T> void call(String command, T chatInfo) {
+       if (command.startsWith("/next")) {
+           command = "next";
+       }
+
         Consumer<T> action = commands.get(command);
         Command <T> method = new Command<>(action);
         method.setChatInfo(chatInfo);
