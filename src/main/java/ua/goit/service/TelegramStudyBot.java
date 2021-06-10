@@ -15,19 +15,39 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
+
 import lombok.SneakyThrows;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import ua.goit.util.PropertiesLoader;
 import ua.goit.view.Keyboard;
-import ua.goit.view.Start;
+import ua.goit.view.buttons.*;
+
 
 public class TelegramStudyBot extends TelegramLongPollingBot {
 
     private Service service;
 
     public TelegramStudyBot() {
-        service = new Service(chatInfo -> sendNew(chatInfo,
-                "Welcome! You must register to continue: ", Keyboard.inline(Start.values(), 2)));
+        service = new Service(chatInfo -> {
+
+            sendNew(chatInfo, "Добро пожаловать! Для начала работы с ботом введите электронную почту",
+                    Keyboard.inline(Start.values(), 2));
+
+//            String inputText = handleMessageUpdate(chatInfo);
+//            sendNew(chatInfo, inputText, null);
+
+
+            sendNew(chatInfo, "Введите номер группы", null);
+            sendNew(chatInfo, "Приветствуем тебя студент!\n" +
+                            " Этот бот поможет тебе подготовиться к техническим собеседованиям по вебразработке," +
+                            " но прежде тебе нужно выбрать блок изучения\"",
+                    Keyboard.inlineWithOptional(OptionalButtons.values(), 2, OptionalButtons.STUDYBLOCK_1));
+
+            sendNew(chatInfo, "Введите время оповещений", Keyboard.reply(NotificationTime.values(), 3));
+            sendNew(chatInfo, "Для перехода к следующему вопросу нажмите кнопку далее", Keyboard.inline(Next.values(), 2));
+            sendNew(chatInfo, "Готов ли ты продолжить обучение?", Keyboard.inline(YesNo.values(), 2));
+
+        });
     }
 
     public String getInputData(Update update, boolean checkWithUserText) {

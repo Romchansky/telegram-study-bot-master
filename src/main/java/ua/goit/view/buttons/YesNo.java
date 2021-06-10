@@ -1,13 +1,15 @@
-package ua.goit.view;
+package ua.goit.view.buttons;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import ua.goit.view.MenuBlock;
 
 @AllArgsConstructor
 @Getter
-public enum Start implements MenuBlock {
+public enum YesNo implements MenuBlock {
 
-    REGISTRATION("Registration", "/registration");
+    YES("Да","/yes"),
+    NO("Нет","/no");
 
     private final String text;
     private final String command;
