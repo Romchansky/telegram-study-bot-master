@@ -1,11 +1,11 @@
-package view.menu;
+package ua.goit.view;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum NotificationTime implements MenuBlock{
+public enum NotificationTime implements MenuBlock {
 
    TIME_9("9", "/notify_9"),
     TIME_10("10", "/notify_10"),

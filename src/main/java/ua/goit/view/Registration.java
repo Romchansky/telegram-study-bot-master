@@ -1,16 +1,15 @@
-package view.menu;
+package ua.goit.view;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum Next implements MenuBlock{
+public enum Registration implements MenuBlock {
 
-    NEXT("Далее","/next");
+    REGISTRATION("Регистрация", "/registration");
 
     private final String text;
     private final String command;
-
 
 }

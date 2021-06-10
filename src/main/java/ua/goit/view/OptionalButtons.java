@@ -1,4 +1,4 @@
-package view.menu;
+package ua.goit.view;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
