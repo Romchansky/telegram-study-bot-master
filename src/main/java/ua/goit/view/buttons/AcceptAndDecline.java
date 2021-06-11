@@ -6,13 +6,12 @@ import ua.goit.view.MenuBlock;
 
 @AllArgsConstructor
 @Getter
-public enum OptionalButtons implements MenuBlock {
+public enum AcceptAndDecline implements MenuBlock {
 
-    STUDYBLOCK_1("Javascript", "/close"),
-    STUDYBLOCK_2("HTML/CSS", "/close_settings"),
-    STUDYBLOCK_3("REACT", "/close_settings");
-
+    YES("Да","/yes"),
+    NO("Нет","/no");
 
     private final String text;
     private final String command;
+
 }

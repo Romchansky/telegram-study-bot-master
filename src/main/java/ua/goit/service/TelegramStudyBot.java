@@ -18,6 +18,7 @@ import java.util.Objects;
 
 import lombok.SneakyThrows;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import ua.goit.util.MailValidator;
 import ua.goit.util.PropertiesLoader;
 import ua.goit.view.Keyboard;
 import ua.goit.view.buttons.*;
@@ -25,35 +26,30 @@ import ua.goit.view.buttons.*;
 
 public class TelegramStudyBot extends TelegramLongPollingBot {
 
-    private Service service;
+    private final Service service;
+    private MailValidator mailValidator;
 
     public TelegramStudyBot() {
         service = new Service(chatInfo -> {
-
-            sendNew(chatInfo, "Добро пожаловать! Для начала работы с ботом введите электронную почту",
-                    Keyboard.inline(Start.values(), 2));
-
-//            String inputText = handleMessageUpdate(chatInfo);
-//            sendNew(chatInfo, inputText, null);
+            sendNewMessage(chatInfo.getMessage().getChatId(), "Добро пожаловать! Для начала работы с ботом введите электронную почту", Keyboard.inline(Start.values(), 2));
 
 
-            sendNew(chatInfo, "Введите номер группы", null);
-            sendNew(chatInfo, "Приветствуем тебя студент!\n" +
-                            " Этот бот поможет тебе подготовиться к техническим собеседованиям по вебразработке," +
-                            " но прежде тебе нужно выбрать блок изучения\"",
-                    Keyboard.inlineWithOptional(OptionalButtons.values(), 2, OptionalButtons.STUDYBLOCK_1));
-
-            sendNew(chatInfo, "Введите время оповещений", Keyboard.reply(NotificationTime.values(), 3));
-            sendNew(chatInfo, "Для перехода к следующему вопросу нажмите кнопку далее", Keyboard.inline(Next.values(), 2));
-            sendNew(chatInfo, "Готов ли ты продолжить обучение?", Keyboard.inline(YesNo.values(), 2));
+//            sendNew(chatInfo, "Приветствуем тебя студент!\n" +
+//                            " Этот бот поможет тебе подготовиться к техническим собеседованиям по вебразработке," +
+//                            " но прежде тебе нужно выбрать блок изучения\"",
+//                    Keyboard.inlineWithOptional(SelectCourse.values(), 2, SelectCourse.STUDYBLOCK_1));
+//
+//            sendNew(chatInfo, "Введите время оповещений", Keyboard.reply(NotificationTime.values(), 3));
+//            sendNew(chatInfo, "Для перехода к следующему вопросу нажмите кнопку далее", Keyboard.inline(Next.values(), 2));
+//            sendNew(chatInfo, "Готов ли ты продолжить обучение?", Keyboard.inline(AcceptAndDecline.values(), 2));
 
         });
     }
 
+
     public String getInputData(Update update, boolean checkWithUserText) {
         Boolean readUserText = checkWithUserText && update.hasMessage() && update.getMessage().hasText();
         return (readUserText) ? update.getMessage().getText() : update.getCallbackQuery().getData();
-
     }
 
     public <T> Long getChatId(T chatInfo) {
