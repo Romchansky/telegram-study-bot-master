@@ -1,5 +1,6 @@
-package ua.goit.service;
+package ua.goit.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.ParseMode;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -15,25 +16,32 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
+
 import lombok.SneakyThrows;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import ua.goit.service.NotificationService;
+import ua.goit.util.MailValidator;
 import ua.goit.util.PropertiesLoader;
 import ua.goit.view.Keyboard;
-import ua.goit.view.Start;
+import ua.goit.view.MenuBlock;
+import ua.goit.view.buttons.KeyboardButtons;
 
-public class TelegramStudyBot extends TelegramLongPollingBot {
 
-    private Service service;
+@Slf4j
+public class TelegramController extends TelegramLongPollingBot  implements TelegramMessageSender{
 
-    public TelegramStudyBot() {
-        service = new Service(chatInfo -> sendNew(chatInfo,
-                "Welcome! You must register to continue: ", Keyboard.inline(Start.values(), 2)));
+    private MailValidator mailValidator;
+
+    private final NotificationService notificationService = NotificationService.of();
+
+    @Override
+    public void sendNew(Long chatId, String text, int column, MenuBlock ... menuBlock) {
+        if (Objects.nonNull(chatId)) sendNewMessage(chatId, text, Keyboard.inline(menuBlock, column));
     }
 
     public String getInputData(Update update, boolean checkWithUserText) {
         Boolean readUserText = checkWithUserText && update.hasMessage() && update.getMessage().hasText();
         return (readUserText) ? update.getMessage().getText() : update.getCallbackQuery().getData();
-
     }
 
     public <T> Long getChatId(T chatInfo) {
@@ -138,15 +146,96 @@ public class TelegramStudyBot extends TelegramLongPollingBot {
         return PropertiesLoader.getProperty("telegram.bot.token");
     }
 
+
+
+    boolean isValid = false;
+
     @Override
     public void onUpdateReceived(Update update) {
-        String input = null;
-        if (update.hasMessage() && update.getMessage().hasText()) {
-            input = update.getMessage().getText();
+        log.info("OnUpdateReceived : " + update);
+
+        String inputText = update.getMessage().getText();
+
+        if (inputText.startsWith("/start")) {
+            callStartMessage(update);
+        } else if (update.hasMessage() && update.getMessage().hasText()) {
+           log.info("is valid : " + isValid);
+            if(isValid == false) {
+                isValid = callValidEmail(update);
+            }else{
+                callWriteGroup(update);
+            }
         } else if (update.hasCallbackQuery()) {
-            input = update.getCallbackQuery().getData();
+            handleCallbackQueryUpdate(update);
         }
-        service.call(input, update);
+
+//        if (update.hasMessage() && update.getMessage().hasText() && ("/start".equals(update.getMessage().getText()))) {
+//            callStartMessage(update);
+
     }
 
+    private void callStartMessage(Update update) {
+        sendNewMessage(update.getMessage().getChatId(),
+                "Добро пожаловать! Для начала работы с ботом введите электронную почту ", null);
+    }
+
+    //класс который следит за состоянием бота и меняет
+    private boolean callValidEmail(Update update) {
+        MailValidator validator = new MailValidator();
+        String messageText = update.getMessage().getText();
+        boolean valid = validator.valid(messageText);
+        if (valid) {
+            log.info("valid is complete: " + valid);
+            return true;
+        } else {
+            log.info("valid is not valid : " + valid);
+            sendNewMessage(update.getMessage().getChatId(), "Введите почту ещё раз: ", null);
+            validator.valid(messageText);
+            return false;
+        }
+    }
+
+    private void callWriteGroup(Update update) {
+        sendNewMessage(update.getMessage().getChatId(), "Введите номер группы: ", null);
+        String nameGroup = update.getMessage().getText();
+        System.out.println(nameGroup);
+        sendNewMessage(update.getMessage().getChatId(), "\"Приветствуем тебя студент!" +
+                " Этот бот поможет тебе подготовиться к техническим собеседованиям по вебразработке, " +
+                "но прежде тебе нужно выбрать блок изучения", Keyboard.inlineDynamic());
+    }
+
+    //не работают команды по условию
+    private void handleCallbackQueryUpdate(Update update) {
+
+        String callbackQuery = update.getCallbackQuery().getData();
+        String text = update.getCallbackQuery().getMessage().getText();
+        System.out.println(callbackQuery + " " + text);
+
+        switch (callbackQuery) {
+//            case "Далее":
+//                new User().getId();
+//                break;
+            case "js":
+
+                // new <hnml> StudyBlock().getCourse();
+                break;
+            case "JavaScript":
+                // new  User().createNewUser();
+                break;
+            case "React":
+                // new User().createNewUser();
+                break;
+        }
+        Long chatId = update.getCallbackQuery().getFrom().getId();
+
+    }
+
+
+
 }
+
+
+
+
+
+
