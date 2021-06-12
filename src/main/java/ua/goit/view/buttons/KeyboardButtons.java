@@ -6,12 +6,14 @@ import ua.goit.view.MenuBlock;
 
 @AllArgsConstructor
 @Getter
-public enum Next implements MenuBlock {
+public enum KeyboardButtons implements MenuBlock {
 
-    NEXT("Далее","/next");
+    YES("Да","/yes"),
+    NO("Нет","/no"),
+    NEXT("Далее","/next"),
+    SETTINGS("Настройки","/settings");
 
     private final String text;
     private final String command;
-
 
 }
