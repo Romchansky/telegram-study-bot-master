@@ -50,12 +50,12 @@ public class GoogleSheetsController {
                                 .video(String.valueOf(row.get(2)))
                                 .build())
                         .collect(Collectors.toList());
-                studyBlockStates.add(new StudyBlockState(String.valueOf(sheet.getProperties().get("title")), taskBlocks));
+               studyBlock.questionsLists.add(taskBlock);
+                }
             }
+        studyBlocks.add(studyBlock);
         }
-        return studyBlockStates;
-    }
-
+  
     private HttpRequestInitializer getCredentials() throws IOException {
         try (InputStream inputStream = PropertiesLoader.getInputStream(PropertiesLoader.getProperty("telegram.credential.file.path"))) {
             return new HttpCredentialsAdapter(GoogleCredentials.fromStream(inputStream)
