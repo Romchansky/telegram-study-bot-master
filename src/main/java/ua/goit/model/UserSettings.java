@@ -1,23 +1,32 @@
 package ua.goit.model;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import ua.goit.util.PropertiesLoader;
+import lombok.EqualsAndHashCode;
+import ua.goit.controller.TelegramMessageSender;
+import static java.time.temporal.ChronoUnit.SECONDS;
 
 @Data
-@NoArgsConstructor
-public class UserSettings {
+@EqualsAndHashCode(exclude = {"lastNotificationAt", "isNotificationDisabled"})
+public class UserSettings implements BaseEntity<Long> {
 
-    private Long chatId;
-    private String name;
-    private String email;
-    private String groupNumber;
-    private LocalTime time;
+    private final Long id;//chatId
+    private Boolean isNotificationDisabled;
+    private LocalDateTime lastNotificationAt;
+    private TelegramMessageSender telegramController;
 
-    public UserSettings(Long chatId) {
-        String [] userNotificationTime = PropertiesLoader.getProperty("user.notification.time").split(":");
-        this.time = LocalTime.of(Integer.valueOf(userNotificationTime[0]), Integer.valueOf(userNotificationTime[1]));
-        this.chatId = chatId;
+    public UserSettings(Long chatId, Boolean isNotificationDisabled, TelegramMessageSender telegramController) {
+        this.id = chatId;
+        this.isNotificationDisabled = isNotificationDisabled;
+        this.lastNotificationAt = LocalDateTime.now();
+        this.telegramController = telegramController;
+    }
+
+    public boolean sendNotification(long periodSec) {
+        if (!isNotificationDisabled && lastNotificationAt.until(LocalDateTime.now(), SECONDS) >= periodSec) {
+            lastNotificationAt = LocalDateTime.now();
+            return true;
+        }
+        return false;
     }
 }

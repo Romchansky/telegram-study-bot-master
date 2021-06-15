@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class StudyBlockState implements BaseEntity<Long>{
+public class StudyBlockState implements BaseEntity<Long> {
 
     public Long id;
     public String name;
@@ -15,13 +15,6 @@ public class StudyBlockState implements BaseEntity<Long>{
     public StudyBlockState(String name, List<TaskBlock> questionsLists) {
         this.name = name;
         this.questionsLists = questionsLists;
-    }
-
-    @Override
-    public String toString() {
-        return "StudyBlock \n" +
-                "Name - " + name + "\n" +
-                "QuestionsLists - " + questionsLists;
     }
 
 }

@@ -1,11 +1,8 @@
 package ua.goit.view.buttons;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import ua.goit.view.MenuBlock;
+import lombok.Value;
 
-@AllArgsConstructor
-@Getter
+@Value
 public class StudyButton implements MenuBlock {
 
     private final String text;

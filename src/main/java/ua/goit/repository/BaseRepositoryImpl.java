@@ -1,50 +1,65 @@
-
 package ua.goit.repository;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import ua.goit.model.BaseEntity;
-import ua.goit.repository.BaseRepository;
 
 public class BaseRepositoryImpl<E extends BaseEntity<ID>, ID> implements BaseRepository<E, ID> {
 
-    private final ConcurrentHashMap<ID, E> studyBlockStateStorage = new ConcurrentHashMap<>();
-
-    @Override
-    public Optional<E> getById(ID id) {
-        return studyBlockStateStorage.containsKey(id) ? Optional.of(studyBlockStateStorage.get(id)) : Optional.empty();
-    }
+    private final ConcurrentHashMap<ID, E> repository = new ConcurrentHashMap<>();
 
     @Override
     public E save(E entity) {
-        return studyBlockStateStorage.put(entity.getId(), entity);
-    }
-
-    @Override
-    public void saveAll(Iterable<E> itrb) {
-        itrb.forEach(this::save);
+        if (entity == null) throw new RuntimeException("It's impossible to save an entity with a value 'null'");
+        else return repository.put(entity.getId(), entity);
     }
 
     @Override
     public void deleteById(ID id) {
-        studyBlockStateStorage.remove(id);
+        if (id!=null) repository.remove(id);
     }
 
-    /*
-    public StudyBlockState getUserStudyBlockStateByChatId(Long chatId) {
-        return studyBlockStateStorage.get(chatId);
+    @Override
+    public Collection<E> findAll() {
+        return repository.values();
     }
 
-    public void updateUserStudyBlockState(Long chatId, int currentProgress) {
-        studyBlockStateStorage.computeIfPresent(chatId, (keyLong, studyBlockState) -> {
-         //   studyBlockState.setCurrentProgress(currentProgress);
-            return studyBlockState;
-        });
+    @Override
+    public E getOne(ID id) {
+        return findById(id).map(e -> e).orElseThrow(()-> new RuntimeException("Entity with id " + id + " not found"));
     }
 
-    public void getUserStudyBlockStateName(Long chatId) {
- //       return studyBlockStateStorage.get(chatId).getStudyBlockName();
+    @Override
+    public void deleteAll() {
+        repository.clear();
     }
-    */
+
+    @Override
+    public long count() {
+        return repository.size();
+    }
+
+    @Override
+    public boolean existsById(ID id) {
+        if (id==null) return false;
+        return repository.containsKey(id);
+    }
+
+    @Override
+    public Optional<E> findById(ID id) {
+        if (id == null) return Optional.empty();
+        return repository.containsKey(id) ? Optional.of(repository.get(id)) : Optional.empty();
+    }
+
+    @Override
+    public List<E> saveAll(Iterable<E> itrbl) {
+        final List<E> result = new ArrayList<>();
+        if (itrbl==null) return result;
+        for (E e : itrbl) result.add(this.save(e));
+        return result;
+    }
 
 }
