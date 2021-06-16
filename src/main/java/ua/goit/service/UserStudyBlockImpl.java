@@ -64,7 +64,7 @@ public class UserStudyBlockImpl extends StudyMenuService implements UserStudyBlo
             default:
                 if (callbackQuery.startsWith("/notify")) {
                     Integer hour = userStudyService.changeNotificationTime(chatId, callbackQuery);
-                    controller.sendNew(chatId, "Уведомление установлено на " + hour);
+                    controller.sendNew(chatId, "Уведомление установлено на " + hour + ":00 часов");
                 } else {
                     throw new RuntimeException("Command not found");
                 }

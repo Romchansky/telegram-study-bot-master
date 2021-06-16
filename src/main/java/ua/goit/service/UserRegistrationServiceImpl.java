@@ -73,5 +73,4 @@ public class UserRegistrationServiceImpl extends StudyMenuService implements Use
         log.info("Registration successfully completed : " + user);
         return Optional.empty();
     }
-
 }

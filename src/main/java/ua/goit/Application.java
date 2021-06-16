@@ -13,5 +13,4 @@ public class Application {
         telegramBotsApi.registerBot(new TelegramController());
         new UpdateGoogleSheetsService(new GoogleSheetsController()).startScheduler();
     }
-
 }

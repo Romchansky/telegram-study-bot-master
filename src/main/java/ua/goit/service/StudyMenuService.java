@@ -2,6 +2,7 @@ package ua.goit.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 import ua.goit.model.StudyBlock;
 import ua.goit.repository.BaseRepository;
 import ua.goit.repository.RepositoryFactory;
@@ -27,7 +28,5 @@ abstract class StudyMenuService {
         }
         studyMenu[blockNames.size()] = KeyboardButtons.SETTINGS;
         return studyMenu;
-
     }
-    
 }

@@ -16,5 +16,4 @@ public class StudyBlockState implements BaseEntity<Long> {
         this.name = name;
         this.questionsLists = questionsLists;
     }
-
 }

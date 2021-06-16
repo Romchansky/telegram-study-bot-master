@@ -13,5 +13,4 @@ public class StudyBlock implements BaseEntity<String> {
         this.id = studyBlockName;
         this.questionsLists = questionsLists;
     }
-
 }

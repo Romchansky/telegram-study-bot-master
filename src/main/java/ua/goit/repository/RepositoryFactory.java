@@ -14,5 +14,4 @@ public class RepositoryFactory {
         if (!REPOSITORIES.containsKey(modelName)) REPOSITORIES.put(modelName, new BaseRepositoryImpl<>());
         return REPOSITORIES.get(modelName);
     }
-
 }

@@ -10,5 +10,4 @@ public interface TelegramMessageSender {
 
     void sendNewWithReply(Long chatId, String text, Integer column, MenuBlock... menuBlock);
 
-
 }
