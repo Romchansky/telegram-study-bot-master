@@ -13,7 +13,7 @@ import java.util.Objects;
 
 import lombok.SneakyThrows;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import ua.goit.service.UserStudyBlock;
+import ua.goit.service.handler.TelegramCommandHandler;
 import ua.goit.util.PropertiesLoader;
 import ua.goit.service.UserRegistrationService;
 import ua.goit.view.Keyboard;
@@ -23,10 +23,10 @@ import ua.goit.view.buttons.MenuBlock;
 public class TelegramController extends TelegramLongPollingBot implements TelegramMessageSender {
 
     private final UserRegistrationService userRegistration;
-    private final UserStudyBlock userStudyBlock;
+    private final TelegramCommandHandler handler;
 
     public TelegramController() {
-        this.userStudyBlock = UserStudyBlock.of();
+        this.handler = TelegramCommandHandler.of();
         this.userRegistration = UserRegistrationService.of();
     }
 
@@ -84,8 +84,7 @@ public class TelegramController extends TelegramLongPollingBot implements Telegr
             userRegistration.execute(update.getMessage().getChatId(), update.getMessage().getText(), this);
         }
         if (update.hasCallbackQuery()) {
-            userStudyBlock.execute(update.getCallbackQuery().getFrom().getId(), update.getCallbackQuery().getData(), this);
-
+            handler.handle(update.getCallbackQuery().getFrom().getId(), update.getCallbackQuery().getData(), this);
         }
     }
 }

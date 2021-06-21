@@ -52,7 +52,7 @@ public class UserStudyServiceImpl implements UserStudyService {
     @Override
     public Optional<TaskBlock> findStudyBlockByName(Long chatId) {
         User user = userRepository.getOne(chatId);
-        Integer questionNumber = user.getCurrentStudyState().getOrDefault(user.getCurrentLearningLanguage(), 0);
+        Integer questionNumber = user.getCurrentStudyState().getOrDefault(user.getCurrentLearningLanguage(), 1);// потому что индекс 0 берет шапку таблицы
         try {
             String name = userRepository.getOne(chatId).getCurrentLearningLanguage();
             return Optional.of(studyRepository.getOne(name).getQuestionsLists().get(questionNumber));

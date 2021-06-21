@@ -4,7 +4,7 @@ import ua.goit.controller.TelegramMessageSender;
 
 public interface UserRegistration {
 
-    public void execute(Long chatId, String text, TelegramMessageSender controller);
+     void execute(Long chatId, String text, TelegramMessageSender controller);
 
     static UserRegistration of() {
         return new UserRegistrationImpl();

@@ -10,7 +10,7 @@ import ua.goit.view.buttons.KeyboardButtons;
 import ua.goit.view.buttons.MenuBlock;
 import ua.goit.view.buttons.StudyButton;
 
-abstract class StudyMenuService {
+public abstract class StudyMenuService {
 
     private final BaseRepository<StudyBlock, String> studyRepository;
 
